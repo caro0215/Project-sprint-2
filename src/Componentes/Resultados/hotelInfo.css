@@ -72,13 +72,19 @@
 .price .icon-price {
   color: #f2b138;
   font-size: 25px;
+  margin-right: 3px;
+}
+.price .icon-price2 {
+  color: #515353;
+  font-size: 25px;
+  margin-right: 3px;
 }
 .btn-reservar {
   width: 100%;
   height: 40px;
   margin: 0;
 }
-button {
+.btn-reservar button {
   border: none;
   background-color: #f2b138;
   width: 100%;

@@ -1,6 +1,5 @@
 @import url("./Componentes/Header/header.css");
 @import url("./Componentes/Filtros/filtros.css");
-@import url("./Componentes/Resultados/resultados.css");
 
 * {
   margin: 0;
@@ -22,8 +21,17 @@
   position: absolute;
 }
 .contenedor-resultados {
-  margin-left: 14%;
-  margin-right: 10%;
+  margin-left: 10%;
+  margin-right: 7%;
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+.not-found {
+  width: 80%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

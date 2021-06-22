@@ -1,178 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
-import { hotelsData } from "./data.js";
 import Header from "./Componentes/Header/header.jsx";
 import Filtros from "./Componentes/Filtros/filtros.jsx";
-import Resultados from "./Componentes/Resultados/resultados.jsx";
+//import Resultados from "./Componentes/Resultados/resultados.jsx";
+import { hotelsData } from "./data.js";
+import HotelInfo from "./Componentes/Resultados/hotelInfo.jsx";
 
 export default function App() {
+  //hook input date
+  const [fechaFrom, setFechaFrom] = useState("");
+  const [fechaTo, setFechaTo] = useState("");
+  //hook input pais
+  const [pais, setPais] = useState("cualquier pais");
+  //Hook precio
+  const [precio, setPrecio] = useState("cualquier precio");
+  //Hook tamaño
+  const [size, setSize] = useState("cualquier tamaño");
+
+  //Función input date
+  const cambioFechaFrom = (event) => {
+    let dateString = new Date(event.target.value);
+    let tiempoUnix = dateString.getTime();
+    setFechaFrom(event.target.value);
+  };
+  const cambioFechaTo = (event) => {
+    let dateString = new Date(event.target.value);
+    let tiempoUnix = dateString.getTime();
+    setFechaTo(event.target.value);
+  };
+
+  //Función input select pais
+  const cambioPais = (event) => {
+    setPais(event.target.value);
+  };
+
+  //Función input select precio
+  const cambioPrecio = (event) => {
+    setPrecio(event.target.value);
+  };
+
+  //Función input select tamaño
+  const cambioSize = (event) => {
+    setSize(event.target.value);
+  };
+
+  //lista filtrada
+  const crearLista = () => {
+    let nuevaLista = hotelsData;
+    //filtro por país
+    if (pais !== "cualquier pais") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.country === pais);
+    }
+    //filtro precio
+    if (precio === "$") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.price === 1);
+    }
+    if (precio === "$$") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.price === 2);
+    }
+    if (precio === "$$$") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.price === 3);
+    }
+    if (precio === "$$$$") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.price === 4);
+    }
+    //filtro tamaño
+    if (size === "hotel pequeño") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.rooms <= 10);
+    }
+    if (size === "hotel mediano") {
+      nuevaLista = nuevaLista.filter(
+        (hotel) => hotel.rooms > 11 && hotel.rooms <= 20
+      );
+    }
+    if (size === "hotel grande") {
+      nuevaLista = nuevaLista.filter((hotel) => hotel.rooms > 21);
+    }
+
+    return nuevaLista;
+  };
+
+  let listaFiltrada = crearLista();
+
+  //Limpiar botón
+  const limpiarSeleccion = () => {
+    setFechaFrom("");
+    setFechaTo("");
+    setPais("cualquier pais");
+    setPrecio("cualquier precio");
+    setSize("cualquier size");
+  };
+
   return (
     <div className="contenedor-app ">
       <Header />
-      <Filtros />
+      <Filtros
+        fechaFrom={fechaFrom}
+        cambioFechaFrom={cambioFechaFrom}
+        fechaTo={fechaTo}
+        cambioFechaTo={cambioFechaTo}
+        pais={pais}
+        cambioPais={cambioPais}
+        precio={precio}
+        cambioPrecio={cambioPrecio}
+        size={size}
+        cambioSize={cambioSize}
+        limpiar={limpiarSeleccion}
+      />
       <div className="contenedor-resultados">
-        <Resultados
-          name={hotelsData[0].name}
-          photo={hotelsData[0].photo}
-          description={hotelsData[0].description}
-          rooms={hotelsData[0].rooms}
-          city={hotelsData[0].city}
-          country={hotelsData[0].country}
-          price={hotelsData[0].price}
-        />
-        <Resultados
-          name={hotelsData[1].name}
-          photo={hotelsData[1].photo}
-          description={hotelsData[1].description}
-          rooms={hotelsData[1].rooms}
-          city={hotelsData[1].city}
-          country={hotelsData[1].country}
-          price={hotelsData[1].price}
-        />
-        <Resultados
-          name={hotelsData[2].name}
-          photo={hotelsData[2].photo}
-          description={hotelsData[2].description}
-          rooms={hotelsData[2].rooms}
-          city={hotelsData[2].city}
-          country={hotelsData[2].country}
-          price={hotelsData[2].price}
-        />
-        <Resultados
-          name={hotelsData[3].name}
-          photo={hotelsData[3].photo}
-          description={hotelsData[3].description}
-          rooms={hotelsData[3].rooms}
-          city={hotelsData[3].city}
-          country={hotelsData[3].country}
-          price={hotelsData[3].price}
-        />
-        <Resultados
-          name={hotelsData[4].name}
-          photo={hotelsData[4].photo}
-          description={hotelsData[4].description}
-          rooms={hotelsData[4].rooms}
-          city={hotelsData[4].city}
-          country={hotelsData[4].country}
-          price={hotelsData[4].price}
-        />
-        <Resultados
-          name={hotelsData[5].name}
-          photo={hotelsData[5].photo}
-          description={hotelsData[5].description}
-          rooms={hotelsData[5].rooms}
-          city={hotelsData[5].city}
-          country={hotelsData[5].country}
-          price={hotelsData[5].price}
-        />
-        <Resultados
-          name={hotelsData[6].name}
-          photo={hotelsData[6].photo}
-          description={hotelsData[6].description}
-          rooms={hotelsData[6].rooms}
-          city={hotelsData[6].city}
-          country={hotelsData[6].country}
-          price={hotelsData[6].price}
-        />
-        <Resultados
-          name={hotelsData[7].name}
-          photo={hotelsData[7].photo}
-          description={hotelsData[7].description}
-          rooms={hotelsData[7].rooms}
-          city={hotelsData[7].city}
-          country={hotelsData[7].country}
-          price={hotelsData[7].price}
-        />
-        <Resultados
-          name={hotelsData[8].name}
-          photo={hotelsData[8].photo}
-          description={hotelsData[8].description}
-          rooms={hotelsData[8].rooms}
-          city={hotelsData[8].city}
-          country={hotelsData[8].country}
-          price={hotelsData[8].price}
-        />
-        <Resultados
-          name={hotelsData[9].name}
-          photo={hotelsData[9].photo}
-          description={hotelsData[9].description}
-          rooms={hotelsData[9].rooms}
-          city={hotelsData[9].city}
-          country={hotelsData[9].country}
-          price={hotelsData[9].price}
-        />
-        <Resultados
-          name={hotelsData[10].name}
-          photo={hotelsData[10].photo}
-          description={hotelsData[10].description}
-          rooms={hotelsData[10].rooms}
-          city={hotelsData[10].city}
-          country={hotelsData[10].country}
-          price={hotelsData[10].price}
-        />
-        <Resultados
-          name={hotelsData[11].name}
-          photo={hotelsData[11].photo}
-          description={hotelsData[11].description}
-          rooms={hotelsData[11].rooms}
-          city={hotelsData[11].city}
-          country={hotelsData[11].country}
-          price={hotelsData[11].price}
-        />
-        <Resultados
-          name={hotelsData[12].name}
-          photo={hotelsData[12].photo}
-          description={hotelsData[12].description}
-          rooms={hotelsData[12].rooms}
-          city={hotelsData[12].city}
-          country={hotelsData[12].country}
-          price={hotelsData[12].price}
-        />
-        <Resultados
-          name={hotelsData[13].name}
-          photo={hotelsData[13].photo}
-          description={hotelsData[13].description}
-          rooms={hotelsData[13].rooms}
-          city={hotelsData[13].city}
-          country={hotelsData[13].country}
-          price={hotelsData[13].price}
-        />
-        <Resultados
-          name={hotelsData[14].name}
-          photo={hotelsData[14].photo}
-          description={hotelsData[14].description}
-          rooms={hotelsData[14].rooms}
-          city={hotelsData[14].city}
-          country={hotelsData[14].country}
-          price={hotelsData[14].price}
-        />
-        <Resultados
-          name={hotelsData[15].name}
-          photo={hotelsData[15].photo}
-          description={hotelsData[15].description}
-          rooms={hotelsData[15].rooms}
-          city={hotelsData[15].city}
-          country={hotelsData[15].country}
-          price={hotelsData[15].price}
-        />
-        <Resultados
-          name={hotelsData[16].name}
-          photo={hotelsData[16].photo}
-          description={hotelsData[16].description}
-          rooms={hotelsData[16].rooms}
-          city={hotelsData[16].city}
-          country={hotelsData[16].country}
-          price={hotelsData[16].price}
-        />
-        <Resultados
-          name={hotelsData[17].name}
-          photo={hotelsData[17].photo}
-          description={hotelsData[17].description}
-          rooms={hotelsData[17].rooms}
-          city={hotelsData[17].city}
-          country={hotelsData[17].country}
-          price={hotelsData[17].price}
-        />
+        {listaFiltrada.length > 0 ? (
+          listaFiltrada.map((hotel) => (
+            <HotelInfo
+              name={hotel.name}
+              photo={hotel.photo}
+              description={hotel.description}
+              rooms={hotel.rooms}
+              city={hotel.city}
+              country={hotel.country}
+              price={hotel.price}
+            />
+          ))
+        ) : (
+          <div className="not-found">
+            <img
+              src="./images/not-found.png"
+              alt="sin resultados"
+              width="600px"
+            ></img>
+          </div>
+        )}
       </div>
     </div>
   );

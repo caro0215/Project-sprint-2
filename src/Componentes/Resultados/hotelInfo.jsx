@@ -1,11 +1,11 @@
 import React from "react";
-import "./resultados.css";
+import "./hotelInfo.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBed } from "@fortawesome/free-solid-svg-icons";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 
-export default function Resultados(props) {
+export default function HotelInfo(props) {
   return (
     <div className="contenedor-hotel">
       <div className="img-hoteles">
@@ -29,7 +29,12 @@ export default function Resultados(props) {
           <div className="place-text">{props.rooms} habitaciones</div>
         </div>
         <div className="price">
-          <FontAwesomeIcon className="icon-price" icon={faDollarSign} />
+          {[...Array(props.price)].map(() => (
+            <FontAwesomeIcon className="icon-price" icon={faDollarSign} />
+          ))}
+          {[...Array(4 - props.price)].map(() => (
+            <FontAwesomeIcon className="icon-price2" icon={faDollarSign} />
+          ))}
         </div>
       </div>
       <div className="btn-reservar">
